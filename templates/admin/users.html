@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المستخدمين - منصة التعلم الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --card-bg: #16213e;
+            --text-color: #e2e2e2;
+            --text-secondary: #b8b8b8;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+        }
+        
+        .page-title {
+            color: var(--accent-color);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        .users-table-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        th {
+            background-color: rgba(76, 201, 240, 0.1);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: rgba(76, 201, 240, 0.05);
+        }
+        
+        .password-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .password-brief {
+            font-family: monospace;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-copy {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-copy:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-delete {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-admin {
+            background-color: var(--warning-color);
+            color: #212529;
+        }
+        
+        .btn-admin:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-admin.active {
+            background-color: #d39e00;
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chart-title {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 15px;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .users-table-container {
+                padding: 15px 10px;
+            }
+            
+            th, td {
+                padding: 10px 5px;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="page-header">
+            <h1 class="page-title">إدارة المستخدمين</h1>
+            <p class="page-subtitle">عرض وتعديل بيانات المستخدمين المسجلين في المنصة</p>
+        </div>
+        
+        <div class="users-table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>اسم المستخدم</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>كلمة المرور</th>
+                        <th>تاريخ التسجيل</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td class="password-cell">
+                            <span id="password-{{ user.id }}" class="password-brief">{{ user.password[:4] }}***</span>
+                            <button class="btn btn-copy" onclick="copyPassword('{{ user.password }}')">
+                                <i class="fas fa-copy"></i> نسخ
+                            </button>
+                        </td>
+                        <td>{{ user.created_at }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-delete" onclick="return confirm('هل أنت متأكد من حذف هذا المستخدم؟');">
+                                        <i class="fas fa-trash-alt"></i> حذف
+                                    </button>
+                                </form>
+                                <form action="{{ url_for('set_admin', user_id=user.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-admin {% if user.is_admin %}active{% endif %}" 
+                                            onclick="return confirm('هل أنت متأكد من تغيير صلاحية هذا المستخدم؟');">
+                                        <i class="fas fa-user-shield"></i>
+                                        {% if user.is_admin %}إلغاء المشرف{% else %}تعيين مشرف{% endif %}
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3 class="chart-title">التسجيلات اليومية</h3>
+                <div class="chart-wrapper">
+                    <canvas id="dailyChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <h3 class="chart-title">التسجيلات الشهرية</h3>
+                <div class="chart-wrapper">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <h3 class="chart-title">التسجيلات السنوية</h3>
+                <div class="chart-wrapper">
+                    <canvas id="yearlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // دالة نسخ كلمة المرور
+        function copyPassword(password) {
+            navigator.clipboard.writeText(password).then(() => {
+                alert('تم نسخ كلمة المرور إلى الحافظة');
+            }).catch(err => {
+                alert('حدث خطأ أثناء نسخ كلمة المرور: ' + err);
+            });
+        }
+
+        // بيانات الرسوم البيانية (يمكن استبدالها ببيانات حقيقية من الخادم)
+        const dailyData = {
+            labels: ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+            datasets: [{
+                label: 'عدد المشتركين',
+                data: [12, 19, 8, 15, 12, 10, 18],
+                borderColor: 'rgba(76, 201, 240, 1)',
+                backgroundColor: 'rgba(76, 201, 240, 0.1)',
+                tension: 0.3,
+                fill: true
+            }]
+        };
+
+        const monthlyData = {
+            labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو'],
+            datasets: [{
+                label: 'عدد المشتركين',
+                data: [65, 59, 80, 81, 56, 72, 90],
+                backgroundColor: 'rgba(67, 97, 238, 0.7)',
+                borderColor: 'rgba(67, 97, 238, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const yearlyData = {
+            labels: ['2024', '2025', '2026', '2027', '2028'],
+            datasets: [{
+                label: 'عدد المشتركين',
+                data: [320, 450, 600, 780, 950],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(255, 99, 132, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // تهيئة الرسوم البيانية
+        document.addEventListener('DOMContentLoaded', () => {
+            // الرسم البياني اليومي
+            new Chart(
+                document.getElementById('dailyChart'),
+                {
+                    type: 'line',
+                    data: dailyData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                rtl: true
+                            }
+                        }
+                    }
+                }
+            );
+
+            // الرسم البياني الشهري
+            new Chart(
+                document.getElementById('monthlyChart'),
+                {
+                    type: 'bar',
+                    data: monthlyData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                rtl: true
+                            }
+                        }
+                    }
+                }
+            );
+
+            // الرسم البياني السنوي
+            new Chart(
+                document.getElementById('yearlyChart'),
+                {
+                    type: 'pie',
+                    data: yearlyData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                rtl: true
+                            }
+                        }
+                    }
+                }
+            );
+        });
+
+
+        
+    </script>
+</body>
+</html>

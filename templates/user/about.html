@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عن المنصة - منصة التعلم الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --card-bg: #16213e;
+            --text-color: #e2e2e2;
+            --text-secondary: #b8b8b8;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        /* تصميم الهيدر - نفس التصميم السابق */
+        .main-header {
+            background: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* تصميم المحتوى الرئيسي */
+        .about-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .about-hero {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            padding: 60px 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+        }
+        
+        .about-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: var(--primary-color);
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .about-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .about-card i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .about-card p {
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        
+        /* قسم الفريق */
+        .team-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--accent-color);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: fill;
+            border: 3px solid var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .team-member h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .team-member p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* التذييل */
+        footer {
+            background: rgba(10, 10, 20, 0.9);
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .footer-social {
+            margin-bottom: 30px;
+        }
+        
+        .footer-social a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .about-hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'user/header.html' %}
+    
+    <div class="about-container">
+        <section class="about-hero">
+            <h1>مرحبًا بكم في منصة التعلم الذكي</h1>
+            <p>منصة رائدة في التعليم الإلكتروني تقدم تجربة تعليمية فريدة ومبتكرة تلبي احتياجاتكم في عصر التكنولوجيا</p>
+            <a href="https://wa.me/967715206725" class="cta-button" target="_blank">تواصل معنا <i class="fas fa-phone"></i></a>
+        </section>
+        
+        <div class="about-content">
+            <div class="about-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>رسالتنا</h3>
+                <p>نسعى لتوفير تعليم عالي الجودة يواكب متطلبات سوق العمل، ويساهم في بناء جيل قادر على مواكبة التطورات التكنولوجية.</p>
+            </div>
+            
+            <div class="about-card">
+                <i class="fas fa-bullseye"></i>
+                <h3>رؤيتنا</h3>
+                <p>أن نكون المنصة الرائدة في تقديم حلول التعليم الإلكتروني المبتكرة في المنطقة العربية.</p>
+            </div>
+            
+            <div class="about-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>أهدافنا</h3>
+                <p>تطوير مهارات الدارسين، وتوفير محتوى تعليمي متميز، وبناء مجتمع تعليمي تفاعلي.</p>
+            </div>
+        </div>
+        
+        <section class="team-section">
+            <h2 class="section-title">فريق العمل</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{url_for('static',filename='images/Screenshot_٢٠٢٥٠٤١٥-١٥١٢٥١~2.png')}}" alt="عضو الفريق">
+                    <h3>اسامة صادق العديني</h3>
+                    <p>المدير التنفيذي</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="{{url_for('static',filename='images/1747503466043.jpg')}}" alt="عضو الفريق">
+                    <h3>اسعد الكامل</h3>
+                    <p>رئيسة قسم التطوير</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="{{url_for('static',filename='images/IMG-20250517-WA0019.jpg')}}" alt="عضو الفريق">
+                    <h3>احمد العمري</h3>
+                    <p>رئيس قسم المحتوى</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">الرئيسية</a>
+                <a href="/user/about">عن المنصة</a>
+                <a href="#">الشروط والأحكام</a>
+                <a href="#">سياسة الخصوصية</a>
+                <a href="/user/contact">اتصل بنا</a>
+            </div>
+            
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            
+            <p class="copyright">© 2023 منصة التعلم الذكي. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+</body>
+</html>

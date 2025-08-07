@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #16213e;
+            overflow: hidden;
+            position: relative; 
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: rgba(58, 63, 71, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        h2 {
+            text-align: center;
+            color: #61dafb;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #61dafb;
+            border-radius: 5px;
+            background: #444;
+            color: #ffffff;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #21a1f1;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #61dafb;
+            color: #282c34;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .social-links {
+            text-align: center;
+          
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 16px; 
+        }
+
+        .social-links a:hover {
+            color: #61dafb;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(270deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
+            background-size: 200% 100%;
+            animation: slide 4s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes slide {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
+        }
+        .btn:hover{
+font-size: 17px;
+ background: linear-gradient(270deg, rgba(123, 159, 212, 0.9), rgba(216, 143, 143, 0.5));
+color: white;
+animation: slide 1s linear infinite;
+        }
+        ul{
+            list-style:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">   
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class="flashes" style="color: rgb(219, 128, 128); font-size: 22px;">
+            {% for message in messages %}
+              <li><h1 style="display: inline;">*</h1> {{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+        <h2>تسجيل الدخول</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="اسم المستخدم" required>
+            <input type="password" name="password" placeholder="كلمة المرور" required>
+            <button type="submit" class="btn">تسجيل الدخول</button>
+        </form>
+        <a  href="/user/login_pass" style="color: #61dafb;padding-top: 13px; margin-left: auto;">طريقة اخرى</a>
+
+        <div class="social-links">
+            <p style="font-weight: bold;font-size: 20px;color: white;">تسجيل الدخول عبر</p>
+            <a href="{{ url_for('google.login') }}"  style="color: rgb(199, 199, 230);">
+                <i class="fab fa-google"></i> جوجل
+            </a>
+            <a href="{{ url_for('github.login') }}" style="color: rgb(195, 156, 231);">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+        </div>
+        <div class="footer">
+            <p>ليس لديك حساب؟ <a href="/user/register" style="color: #61dafb;">إنشاء حساب جديد</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

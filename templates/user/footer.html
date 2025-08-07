@@ -1,0 +1,97 @@
+<style>
+     .footer {
+            background: #0f0f1a;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-title {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-left: 1rem;
+            transition: color 0.2s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+</style>
+
+<!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="footer-title">منصة التعلم الذكي</h5>
+                    <p>منصة رائدة في التعليم الإلكتروني تقدم دورات عالية الجودة في مختلف المجالات لتطوير مهاراتك وبناء مستقبلك.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="footer-title">روابط سريعة</h5>
+                    <div class="footer-links">
+                        <a href="/">الرئيسية</a>
+                        <a href="user/about">عن المنصة</a>
+                        <a href="/user/api">توثيق APIs</a>
+                         <a href="/user/contantgroup" target="_blank">تواصل جماعي</a>
+                               {%if is_admin %}
+           <a href="/admin/index" target="_blank">التحكم المركزي</a>
+                {% endif %}
+                         
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="footer-title">الفئات</h5>
+                    <div class="footer-links">
+                        <a href="#">البرمجة</a>
+                        <a href="#">التصميم</a>
+                        <a href="#">الأعمال</a>
+                        <a href="#">العلوم</a>
+                        <a href="#">التطوير الذاتي</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="footer-title">النشرة البريدية</h5>
+                    <p>اشترك في نشرتنا البريدية ليصلك كل جديد عن الدورات والعروض الخاصة.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="بريدك الإلكتروني">
+                        <button class="btn btn-primary" type="button">اشتراك</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center copyright">
+                <p>© 2025 منصة التعلم الذكي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>

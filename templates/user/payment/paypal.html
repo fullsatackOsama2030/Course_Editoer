@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدفع عبر باي بال - منصة التعلم الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0070ba;
+            --secondary-blue: #003087;
+            --light-gray: #f7f9fa;
+            --dark-gray: #6c757d;
+            --accent-color: #4cc9f0;
+            --success-color: #4ade80;
+            --dark-color: #1a1a2e;
+            --card-bg: #16213e;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--dark-color);
+            color: #e2e2e2;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            height: 40px;
+        }
+        
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .secure-badge svg {
+            margin-left: 5px;
+        }
+        
+        .main-content {
+            display: flex;
+            margin: 30px 0;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .payment-section {
+            flex: 2;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            min-width: 300px;
+        }
+        
+        .summary-section {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            align-self: flex-start;
+            min-width: 300px;
+        }
+        
+        .section-title {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .paypal-option {
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .paypal-option:hover {
+            background-color: rgba(0, 112, 186, 0.05);
+        }
+        
+        .paypal-option.selected {
+            background-color: rgba(0, 112, 186, 0.1);
+            border-color: var(--accent-color);
+        }
+        
+        .paypal-logo {
+            height: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .paypal-benefits {
+            list-style-type: none;
+            padding: 0;
+            margin: 15px 0 0 0;
+        }
+        
+        .paypal-benefits li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #b8b8b8;
+        }
+        
+        .paypal-benefits svg {
+            margin-left: 8px;
+            color: var(--success-color);
+        }
+        
+        .card-option {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .card-option:hover {
+            border-color: var(--accent-color);
+        }
+        
+        .card-logos {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .card-logos img {
+            height: 25px;
+            filter: grayscale(30%);
+        }
+        
+        .card-option:hover .card-logos img {
+            filter: grayscale(0%);
+        }
+        
+        .continue-btn {
+            width: 100%;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .continue-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .continue-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .summary-total {
+            font-weight: 600;
+            font-size: 18px;
+            margin-top: 20px;
+            color: var(--success-color);
+        }
+        
+        .course-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            max-height: 150px;
+            object-fit: cover;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 46, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .loading-spinner {
+            border: 5px solid rgba(76, 201, 240, 0.1);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            margin-top: auto;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b8b8b8;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .discounted-price {
+            color: #b8b8b8;
+            text-decoration: line-through;
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+        
+        .current-price {
+            color: var(--success-color);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .payment-section, .summary-section {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="header">
+            <img src="{{url_for('static',filename='images/j.png')}}" alt="منصة التعلم الذكي" class="logo">
+            <div class="secure-badge">
+                <span>دفع آمن</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#4cc9f0">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11V11.99z"/>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="payment-section">
+                <h2 class="section-title">اختر طريقة الدفع</h2>
+                
+                <div class="paypal-option selected" id="paypalOption" onclick="selectPayment('paypal')">
+                    <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" alt="PayPal" class="paypal-logo">
+                    <p>سجل الدخول إلى حسابك في باي بال لإتمام عملية الدفع بسرعة وأمان</p>
+                    
+                    <ul class="paypal-benefits">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4ade80">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                            لا حاجة لإدخال بيانات بطاقتك
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4ade80">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                            حماية المشتري من باي بال
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4ade80">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                            إمكانية الدفع بالتقسيط
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card-option" id="cardOption" onclick="selectPayment('card')">
+                    <h3>الدفع باستخدام بطاقة ائتمان أو مدى</h3>
+                    <div class="card-logos">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1200px-Visa_Inc._logo.svg.png" alt="Visa">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mastercard_2019_logo.svg/1200px-Mastercard_2019_logo.svg.png" alt="Mastercard">
+                   </div>
+                </div>
+                
+                <button class="continue-btn" id="continueBtn" onclick="processPayment()">
+                    <i class="fas fa-lock"></i> متابعة إلى الدفع
+                </button>
+            </div>
+            
+            <div class="summary-section">
+                <h2 class="section-title">ملخص الطلب</h2>
+                
+                <img id="courseImage" class="course-image" src="" alt="صورة الدورة">
+                
+                <div class="summary-item">
+                    <span>الدورة:</span>
+                    <span id="courseTitle"></span>
+                </div>
+                
+                <div class="summary-item">
+                    <span>النوع:</span>
+                    <span id="courseType"></span>
+                </div>
+                
+                <div class="summary-item">
+                    <span>السعر الأصلي:</span>
+                    <span id="originalPrice" class="discounted-price"></span>
+                </div>
+                
+                <div class="summary-item">
+                    <span>السعر بعد الخصم:</span>
+                    <span id="discountedPrice" class="current-price"></span>
+                </div>
+                
+                <div class="summary-item summary-total">
+                    <span>المجموع:</span>
+                    <span id="totalPrice" class="current-price"></span>
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <span style="color: #b8b8b8; font-size: 14px;">سياسة الإرجاع: 14 يوم للإرجاع</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#">الشروط والأحكام</a>
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">اتصل بنا</a>
+            </div>
+            <p>© 2025 منصة التعلم الذكي. جميع الحقوق محفوظة.</p>
+        </div>
+    </div>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p id="loadingText">جاري معالجة طلبك...</p>
+    </div>
+
+    <script>
+        // استقبال بيانات الدورة من URL
+        function getCourseDataFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                title: params.get('title') || 'دورة غير معروفة',
+                image: params.get('image') || 'https://via.placeholder.com/300',
+                type: params.get('type') || 'مدفوعة',
+                originalPrice: params.get('originalPrice') || '0',
+                discountedPrice: params.get('discountedPrice') || '0'
+            };
+        }
+        
+        // عرض بيانات الدورة في صفحة الدفع
+        function displayCourseData() {
+            const course = getCourseDataFromURL();
+            
+            document.getElementById('courseTitle').textContent = course.title;
+            document.getElementById('courseType').textContent = course.type;
+            document.getElementById('originalPrice').textContent = course.originalPrice + '$';
+            document.getElementById('discountedPrice').textContent = course.discountedPrice + '$';
+            document.getElementById('totalPrice').textContent = course.discountedPrice + '$';
+            document.getElementById('courseImage').src = course.image;
+            document.getElementById('courseImage').alt = course.title;
+        }
+        
+        // اختيار طريقة الدفع
+        function selectPayment(method) {
+            const paypalOption = document.getElementById('paypalOption');
+            const cardOption = document.getElementById('cardOption');
+            const continueBtn = document.getElementById('continueBtn');
+            
+            if (method === 'paypal') {
+                paypalOption.classList.add('selected');
+                cardOption.classList.remove('selected');
+                continueBtn.innerHTML = '<i class="fas fa-lock"></i> متابعة إلى باي بال';
+            } else {
+                paypalOption.classList.remove('selected');
+                cardOption.classList.add('selected');
+                continueBtn.innerHTML = '<i class="fas fa-lock"></i> متابعة إلى الدفع';
+            }
+        }
+        
+        // معالجة الدفع
+        function processPayment() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const paypalOption = document.getElementById('paypalOption');
+            const loadingText = document.getElementById('loadingText');
+            const course = getCourseDataFromURL();
+            
+            // عرض شاشة التحميل
+            loadingOverlay.style.display = 'flex';
+            
+            // محاكاة التحميل
+            setTimeout(() => {
+                if (paypalOption.classList.contains('selected')) {
+                    // إنشاء رابط باي بال مع بيانات الدورة
+                    const paypalParams = new URLSearchParams();
+                    paypalParams.append('cmd', '_xclick');
+                    paypalParams.append('business', 'your-paypal-email@example.com');
+                    paypalParams.append('item_name', course.title);
+                    paypalParams.append('amount', course.discountedPrice);
+                    paypalParams.append('currency_code', 'USD');
+                    paypalParams.append('return', window.location.origin + '/payment-success');
+                    paypalParams.append('cancel_return', window.location.origin + '/payment-cancel');
+                    
+                    // التوجيه إلى باي بال الرسمي
+                    window.location.href = `https://www.paypal.com/cgi-bin/webscr?${paypalParams.toString()}`;
+                } else {
+                    // التوجيه إلى صفحة الدفع بالبطاقة مع بيانات الدورة
+                    const cardParams = new URLSearchParams(window.location.search);
+                    window.location.href = `card-payment.html?${cardParams.toString()}`;
+                }
+            }, 2000);
+        }
+        
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            // عرض بيانات الدورة
+            displayCourseData();
+            
+            // اختيار باي بال افتراضيًا
+            selectPayment('paypal');
+            
+            // تأثيرات تحميل الصفحة
+            setTimeout(() => {
+                document.querySelector('.container').style.opacity = '1';
+            }, 300);
+        });
+    </script>
+</body>
+</html>

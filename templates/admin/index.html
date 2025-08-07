@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المدير - منصة التعلم الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --card-bg: #16213e;
+            --text-color: #e2e2e2;
+            --text-secondary: #b8b8b8;
+            --sidebar-width: 280px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        /* خلفية ثلاثية الأبعاد */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* الهيكل الرئيسي */
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* الشريط الجانبي */
+        .admin-sidebar {
+            width: var(--sidebar-width);
+            background: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--text-color);
+            padding: 25px 15px;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+            height: 100vh;
+            position: fixed;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            z-index: 10;
+            border-left: 1px solid rgba(76, 201, 240, 0.2);
+        }
+        
+        .admin-sidebar h2 {
+            margin: 0 0 30px;
+            font-size: 1.8rem;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.3);
+            color: var(--accent-color);
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 12px 0;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .sidebar-menu a i {
+            margin-left: 10px;
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+        
+        .sidebar-menu a:hover {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--accent-color);
+            transform: translateX(-5px);
+        }
+        
+        .sidebar-menu a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* المحتوى الرئيسي */
+        .admin-content {
+            margin-right: var(--sidebar-width);
+            padding: 25px;
+            flex-grow: 1;
+            min-height: 100vh;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .page-title {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .user-name {
+            font-weight: 500;
+        }
+        
+        .iframe-container {
+            width: 100%;
+            height: calc(100vh - 150px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+        
+        /* زر تبديل الشريط الجانبي */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-toggle:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        /* التكيف مع الشاشات الصغيرة */
+        @media (max-width: 992px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(0);
+                width: 280px;
+            }
+            
+            .admin-sidebar.collapsed {
+                transform: translateX(280px);
+            }
+            
+            .admin-content {
+                margin-right: 0;
+            }
+            
+            .sidebar-toggle {
+                display: block;
+            }
+            
+            .iframe-container {
+                height: calc(100vh - 120px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-sidebar {
+                width: 260px;
+                padding: 20px 10px;
+            }
+            
+            .admin-sidebar.collapsed {
+                transform: translateX(260px);
+            }
+            
+            .admin-content {
+                padding: 15px;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .iframe-container {
+                height: calc(100vh - 100px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bgCanvas"></canvas>
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="admin-container">
+        <div class="admin-sidebar" id="adminSidebar">
+            <h2><i class="fas fa-cogs"></i> لوحة التحكم</h2>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#" onclick="loadPage('/admin/users')" class="active">
+                        <i class="fas fa-users"></i>
+                        <span>إدارة المستخدمين</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('/admin/add_course')">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>إضافة دورة جديدة</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('/admin/admin_courses')">
+                        <i class="fas fa-book"></i>
+                        <span>إدارة الدورات</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('/user/about')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>معلومات عن المنصة</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('/admin/settings')">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="loadPage('/admin/analytics')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>التحليلات</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/user/logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>تسجيل الخروج</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="admin-content">
+            <div class="admin-header">
+                <h1 class="page-title">مرحبًا بك في لوحة التحكم</h1>
+                <div class="user-profile">
+                    <span class="user-name">المدير</span>
+                    <img src="{{url_for('static',filename='images/Screenshot_٢٠٢٥٠٤١٥-١٥١٢٥١~2.png')}}" alt="صورة المدير" class="user-avatar">
+                </div>
+            </div>
+            
+            <div class="iframe-container">
+                <iframe id="adminFrame" src="/admin/users" class="admin-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js Background Animation
+        const canvas = document.getElementById('bgCanvas');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0d1b2a);
+        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: canvas,
+            antialias: true,
+            alpha: true
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        // Create particles with tech icons
+        const techIcons = ['</>', '{ }', '[]', '()', '=>', '<=', '>=', '!=', '===', '!==', '&&', '||', '++', '--', '==', '? :'];
+        const particlesCount = 500;
+        const particlesGeo = new THREE.BufferGeometry();
+        const posArray = new Float32Array(particlesCount * 3);
+        const sizeArray = new Float32Array(particlesCount);
+        
+        for(let i = 0; i < particlesCount; i++) {
+            const i3 = i * 3;
+            posArray[i3] = (Math.random() - 0.5) * 2000;
+            posArray[i3 + 1] = (Math.random() - 0.5) * 2000;
+            posArray[i3 + 2] = (Math.random() - 0.5) * 2000;
+            sizeArray[i] = Math.random() * 15 + 10;
+        }
+        
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particlesGeo.setAttribute('size', new THREE.BufferAttribute(sizeArray, 1));
+        
+        // Create texture with random tech icons
+        const createTechTexture = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.font = 'Bold 80px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            for(let i = 0; i < 20; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const icon = techIcons[Math.floor(Math.random() * techIcons.length)];
+                ctx.fillStyle = `hsla(${Math.random() * 60 + 200}, 80%, 60%, 0.7)`;
+                ctx.fillText(icon, x, y);
+            }
+            
+            return new THREE.CanvasTexture(canvas);
+        };
+        
+        const particlesMat = new THREE.PointsMaterial({
+            size: 12,
+            map: createTechTexture(),
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true
+        });
+        
+        const particles = new THREE.Points(particlesGeo, particlesMat);
+        scene.add(particles);
+        
+        camera.position.z = 5;
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            particles.rotation.x += 0.0003;
+            particles.rotation.y += 0.0005;
+            
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Sidebar Toggle
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const adminSidebar = document.getElementById('adminSidebar');
+        
+        sidebarToggle.addEventListener('click', () => {
+            adminSidebar.classList.toggle('collapsed');
+        });
+
+        // Page Loading Function
+        function loadPage(url) {
+            document.getElementById('adminFrame').src = url;
+            
+            // Update active menu item
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Close sidebar on mobile after selection
+            if (window.innerWidth <= 768) {
+                adminSidebar.classList.add('collapsed');
+            }
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !adminSidebar.contains(e.target) && 
+                e.target !== sidebarToggle) {
+                adminSidebar.classList.add('collapsed');
+            }
+        });
+    </script>
+</body>
+</html>

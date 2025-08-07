@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الدورات - منصة التعلم الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --card-bg: #16213e;
+            --text-color: #e2e2e2;
+            --text-secondary: #b8b8b8;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+        }
+        
+        .page-title {
+            color: var(--accent-color);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .course-content {
+            padding: 20px;
+        }
+        
+        .course-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        .course-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            --webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .featured-badge {
+            background-color: var(--warning-color);
+            color: #212529;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .featured-badge i {
+            font-size: 0.9rem;
+        }
+        
+        .course-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+        
+        .btn-edit {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background-color: #3a56e8;
+            transform: translateY(-2px);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .course-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-book-open"></i> إدارة الدورات
+            </h1>
+            <p class="page-subtitle">عرض وتعديل جميع الدورات المتاحة على المنصة</p>
+        </div>
+        
+        <div class="courses-grid">
+            {% if courses %}
+                {% for course in courses %}
+                <div class="course-card">
+                    <img src="{{ course.image_url }}" alt="{{ course.title }}" class="course-image">
+                    <div class="course-content">
+                        <h3 class="course-title">{{ course.title }}</h3>
+                        <p class="course-description">{{ course.description }}</p>
+                        
+                        <div class="course-meta">
+                            {% if course.is_featured %}
+                            <span class="featured-badge">
+                                <i class="fas fa-star"></i> مميزة
+                            </span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="course-actions">
+                            <form action="{{ url_for('delete_course', course_id=course.id) }}" method="POST">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذه الدورة؟');">
+                                    <i class="fas fa-trash-alt"></i> حذف
+                                </button>
+                            </form>
+                            
+                            <form action="{{ url_for('toggle_featured', course_id=course.id) }}" method="POST">
+                                <button type="submit" class="btn btn-warning">
+                                    {% if course.is_featured %}
+                                        <i class="fas fa-star-half-alt"></i> إلغاء التمييز
+                                    {% else %}
+                                        <i class="far fa-star"></i> تمييز الدورة
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-book"></i>
+                    <h3>لا توجد دورات متاحة حالياً</h3>
+                    <p>يمكنك إضافة دورات جديدة من خلال لوحة التحكم</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // تأكيد قبل تنفيذ الإجراءات
+        document.querySelectorAll('.btn-danger').forEach(button => {
+            button.addEventListener('click', (e) => {
+                if (!confirm('هل أنت متأكد من حذف هذه الدورة؟')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

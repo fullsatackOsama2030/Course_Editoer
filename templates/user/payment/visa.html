@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدفع بالبطاقة الائتمانية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --card-bg: #16213e;
+            --text-color: #e2e2e2;
+            --text-secondary: #b8b8b8;
+            --success-color: #4ade80;
+            --error-color: #f94144;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .payment-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .header p {
+            color: var(--text-secondary);
+        }
+        
+        .card-logos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .card-logos img {
+            height: 28px;
+            filter: grayscale(30%);
+            transition: all 0.3s;
+        }
+        
+        .card-logos img.active {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+        }
+        
+        input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+        }
+        
+        input.invalid {
+            border-color: var(--error-color);
+        }
+        
+     
+        .expiry-cvv {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .expiry-cvv div {
+            flex: 1;
+        }
+        
+        .payment-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .payment-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .payment-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(76, 201, 240, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--accent-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .secure-payment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .secure-payment svg {
+            margin-left: 5px;
+            color: var(--success-color);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .expiry-cvv {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="header">
+            <h1>الدفع بالبطاقة الائتمانية</h1>
+            <p>أدخل بيانات بطاقتك لإتمام عملية الدفع</p>
+        </div>
+        
+        <div class="card-logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1200px-Visa_Inc._logo.svg.png" alt="Visa" id="visaLogo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mastercard_2019_logo.svg/1200px-Mastercard_2019_logo.svg.png" alt="Mastercard" id="mastercardLogo">
+            <img src="https://www.michiganada.org/wp-content/uploads/MADA-logo-e1441289592468.png" alt="Mada" id="madaLogo">
+        </div>
+        
+        <form id="payment-form">
+            <div class="form-group">
+                <label for="card-number">رقم البطاقة</label>
+                <input type="text" id="card-number" class="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                <div class="error-message" id="cardNumberError">رقم البطاقة غير صحيح</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="card-name">اسم صاحب البطاقة</label>
+                <input type="text" id="card-name" placeholder="كما هو مدون على البطاقة" required>
+                <div class="error-message" id="cardNameError">الاسم يجب أن يكون أكثر من 3 أحرف</div>
+            </div>
+            
+            <div class="form-group">
+                <div class="expiry-cvv">
+                    <div>
+                        <label for="expiry">تاريخ الانتهاء</label>
+                        <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+                        <div class="error-message" id="expiryError">تاريخ الانتهاء غير صحيح</div>
+                    </div>
+                    <div>
+                        <label for="cvv">رمز الأمان (CVV)</label>
+                        <input type="password" id="cvv" placeholder="•••" maxlength="3" required>
+                        <div class="error-message" id="cvvError">رمز الأمان غير صحيح</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>جاري معالجة الدفع...</p>
+            </div>
+            
+            <button type="button" id="pay-button" class="payment-btn" onclick="processPayment()">
+                <i class="fas fa-lock"></i> تأكيد الدفع
+            </button>
+            
+            <div class="secure-payment">
+                <span>دفع آمن ومشفر</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#4ade80">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11V11.99z"/>
+                </svg>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // كشف نوع البطاقة وتحديث الشعارات
+        function detectCardType(cardNumber) {
+            const visaLogo = document.getElementById('visaLogo');
+            const mastercardLogo = document.getElementById('mastercardLogo');
+            const madaLogo = document.getElementById('madaLogo');
+            
+            // إعادة تعيين كل الشعارات
+            [visaLogo, mastercardLogo, madaLogo].forEach(logo => {
+                logo.classList.remove('active');
+            });
+            
+            // فيزا تبدأ بـ 4
+            if (/^4/.test(cardNumber)) {
+                visaLogo.classList.add('active');
+            }
+            // ماستركارد تبدأ بـ 5
+            else if (/^5[1-5]/.test(cardNumber)) {
+                mastercardLogo.classList.add('active');
+            }
+            // مدى (Mada) تبدأ بـ 4 (بعض بطاقات مدى تبدأ بـ 4)
+            else if (/^(4|5)/.test(cardNumber)) {
+                madaLogo.classList.add('active');
+            }
+        }
+        
+        // التحقق من صحة البيانات
+        function validateForm() {
+            let isValid = true;
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+            const cardName = document.getElementById('card-name').value.trim();
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            
+            // التحقق من رقم البطاقة
+            if (!luhnCheck(cardNumber) || cardNumber.length < 13) {
+                document.getElementById('card-number').classList.add('invalid');
+                document.getElementById('cardNumberError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('card-number').classList.remove('invalid');
+                document.getElementById('cardNumberError').style.display = 'none';
+            }
+            
+            // التحقق من اسم البطاقة
+            if (cardName.length < 3) {
+                document.getElementById('card-name').classList.add('invalid');
+                document.getElementById('cardNameError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('card-name').classList.remove('invalid');
+                document.getElementById('cardNameError').style.display = 'none';
+            }
+            
+            // التحقق من تاريخ الانتهاء
+            if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+                document.getElementById('expiry').classList.add('invalid');
+                document.getElementById('expiryError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('expiry').classList.remove('invalid');
+                document.getElementById('expiryError').style.display = 'none';
+            }
+            
+            // التحقق من CVV
+            if (!/^\d{3,4}$/.test(cvv)) {
+                document.getElementById('cvv').classList.add('invalid');
+                document.getElementById('cvvError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('cvv').classList.remove('invalid');
+                document.getElementById('cvvError').style.display = 'none';
+            }
+            
+            return isValid;
+        }
+        
+        // خوارزمية لون للتحقق من رقم البطاقة
+        function luhnCheck(cardNo) {
+            if (cardNo.length < 13) return false;
+            
+            let sum = 0;
+            let alternate = false;
+            
+            for (let i = cardNo.length - 1; i >= 0; i--) {
+                let digit = parseInt(cardNo.substring(i, i + 1));
+                
+                if (alternate) {
+                    digit *= 2;
+                    if (digit > 9) {
+                        digit = (digit % 10) + 1;
+                    }
+                }
+                
+                sum += digit;
+                alternate = !alternate;
+            }
+            
+            return (sum % 10 === 0);
+        }
+        
+        // معالجة الدفع
+        async function processPayment() {
+            if (!validateForm()) return;
+            
+            const payButton = document.getElementById('pay-button');
+            const loadingIndicator = document.getElementById('loading');
+            
+            // تعطيل الزر وإظهار مؤشر التحميل
+            payButton.disabled = true;
+            loadingIndicator.style.display = 'block';
+            
+            try {
+                // محاكاة اتصال بالخادم
+                const response = await simulatePaymentRequest();
+                
+                if (response.success) {
+                    // عرض رسالة النجاح
+                    showPaymentSuccess(response.reference);
+                } else {
+                    showPaymentError(response.message);
+                }
+            } catch (error) {
+                showPaymentError(error.message);
+            } finally {
+                // إعادة تمكين الزر وإخفاء مؤشر التحميل
+                payButton.disabled = false;
+                loadingIndicator.style.display = 'none';
+            }
+        }
+        
+        // عرض رسالة نجاح الدفع
+        function showPaymentSuccess(reference) {
+            alert(`تمت عملية الدفع بنجاح!\nرقم المرجع: ${reference}`);
+            // يمكنك توجيه المستخدم إلى صفحة الشكر هنا
+            // window.location.href = "/thank-you";
+        }
+        
+        // عرض رسالة خطأ في الدفع
+        function showPaymentError(message) {
+            alert(`فشل في عملية الدفع: ${message}\n\nيرجى التحقق من بيانات البطاقة أو استخدام بطاقة أخرى.`);
+        }
+        
+        // محاكاة طلب الدفع إلى الخادم
+        function simulatePaymentRequest() {
+            return new Promise((resolve, reject) => {
+                // محاكاة وقت اتصال بالخادم
+                setTimeout(() => {
+                    // 80% نجاح، 20% فشل (لمحاكاة الواقع)
+                    const isSuccess = Math.random() > 0.2;
+                    
+                    if (isSuccess) {
+                        resolve({
+                            success: true,
+                            reference: 'PAY-' + Math.floor(Math.random() * 1000000),
+                            message: 'تمت المعاملة بنجاح'
+                        });
+                    } else {
+                        reject({
+                            success: false,
+                            message: 'رفضت البطاقة. يرجى التحقق من البيانات أو استخدام بطاقة أخرى'
+                        });
+                    }
+                }, 2000); // محاكاة اتصال لمدة ثانيتين
+            });
+        }
+        
+        // تنسيق رقم البطاقة تلقائياً
+        document.getElementById('card-number').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, '');
+            if (value.length > 0) {
+                value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+            }
+            e.target.value = value;
+            
+            // تحديد نوع البطاقة
+            detectCardType(value.replace(/\s/g, ''));
+        });
+        
+        // تنسيق تاريخ الانتهاء تلقائياً
+        document.getElementById('expiry').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 3) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+        
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثيرات تحميل الصفحة
+            setTimeout(() => {
+                document.querySelector('.payment-container').style.opacity = '1';
+            }, 300);
+        });
+    </script>
+</body>
+</html>

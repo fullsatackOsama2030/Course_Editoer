@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موسوعة المعلومات المتخصصة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --success-color: #4ade80;
+            --warning-color: #f8961e;
+            --danger-color: #f94144;
+            --card-bg: #16213e;
+            --text-color: #e2e2e2;
+            --text-secondary: #b8b8b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        
+        .specialty-selection {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .specialties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .specialty-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .specialty-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .specialty-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .specialty-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .specialty-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        
+        .info-form {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--accent-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .additional-fields {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 30px;
+            border-right: 3px solid var(--accent-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d03437;
+        }
+
+        
+        .knowledge-base {
+            display: none;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-right: 3px solid var(--accent-color);
+            position: relative;
+        }
+
+        .info-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card h3 i {
+            font-size: 1.2rem;
+        }
+
+        .info-card .info-description {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .info-card .info-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-item i {
+            color: var(--accent-color);
+        }
+
+        .additional-info {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        .additional-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--warning-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .additional-info h4 i {
+            font-size: 1rem;
+        }
+
+        .card-actions {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .delete-btn {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #d03437;
+            transform: scale(1.1);
+        }
+
+        
+        .all-knowledge {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-controls select {
+            width: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--text-color);
+            padding: 8px 12px;
+            font-family: inherit;
+        }
+
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .knowledge-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--accent-color);
+            position: relative;
+        }
+
+        .knowledge-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .knowledge-item h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .knowledge-item .item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+        }
+
+        .knowledge-item .item-meta span {
+            background: rgba(76, 201, 240, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .knowledge-item .item-description {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .knowledge-item .item-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .no-items-message {
+            text-align: center;
+            padding: 30px;
+            grid-column: 1 / -1;
+        }
+
+        .no-items-message i {
+            font-size: 3rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .no-items-message p {
+            font-size: 1.1rem;
+        }
+
+        .additional-details {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+        }
+
+        .additional-details summary {
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .additional-details p {
+            margin-top: 10px;
+            padding: 5px;
+        }
+
+        .source-link {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        
+        @media (max-width: 768px) {
+            .specialties-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .info-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-controls {
+                width: 100%;
+            }
+            
+            .filter-controls select {
+                flex-grow: 1;
+            }
+            
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .specialties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+ {% include 'user/header.html' %}
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-book-open"></i> موسوعة المعلومات المتخصصة</h1>
+            <p class="description">أدخل واستعرض معلومات قيمة في مختلف التخصصات العلمية والمهنية</p>
+        </header>
+
+        <section class="specialty-selection" id="specialtySelection">
+            <h2 class="section-title"><i class="fas fa-graduation-cap"></i> اختر التخصص</h2>
+            <div class="specialties-grid">
+                <div class="specialty-card" data-specialty="programming">
+                    <i class="fas fa-code"></i>
+                    <h3>البرمجة</h3>
+                    <p>علوم الحاسوب وتطوير البرمجيات</p>
+                </div>
+                
+                <div class="specialty-card" data-specialty="medicine">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>الطب</h3>
+                    <p>العلوم الطبية والصحية</p>
+                </div>
+                
+                <div class="specialty-card" data-specialty="engineering">
+                    <i class="fas fa-cogs"></i>
+                    <h3>الهندسة</h3>
+                    <p>التخصصات الهندسية المختلفة</p>
+                </div>
+                
+                <div class="specialty-card" data-specialty="science">
+                    <i class="fas fa-flask"></i>
+                    <h3>العلوم</h3>
+                    <p>الفيزياء، الكيمياء، الأحياء</p>
+                </div>
+                
+                <div class="specialty-card" data-specialty="business">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>إدارة أعمال</h3>
+                    <p>الإدارة، الاقتصاد، التسويق</p>
+                </div>
+                
+                <div class="specialty-card" data-specialty="arts">
+                    <i class="fas fa-palette"></i>
+                    <h3>الفنون</h3>
+                    <p>الفنون البصرية والأدائية</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-form" id="infoForm">
+            <h2 class="section-title"><i class="fas fa-edit"></i> إدخال معلومات جديدة</h2>
+            
+            <form id="knowledgeForm">
+                <div id="dynamicFields"></div>
+                
+                <div class="form-group">
+                    <label for="infoTitle"><i class="fas fa-heading"></i> عنوان المعلومة</label>
+                    <input type="text" id="infoTitle" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="infoDescription"><i class="fas fa-align-left"></i> وصف المعلومة</label>
+                    <textarea id="infoDescription" class="form-control" required></textarea>
+                </div>
+                
+                <div class="additional-fields">
+                    <h3><i class="fas fa-plus-circle"></i> معلومات إضافية</h3>
+                    <div class="form-group">
+                        <label for="additionalInfo"><i class="fas fa-info-circle"></i> معلومات هامشية (اختياري)</label>
+                        <textarea id="additionalInfo" class="form-control"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="infoSource"><i class="fas fa-link"></i> المصدر (اختياري)</label>
+                        <input type="url" id="infoSource" class="form-control" placeholder="https://example.com">
+                    </div>
+                </div>
+                
+                <div class="form-group" style="display: flex; gap: 15px;">
+                    <button type="submit" class="btn"><i class="fas fa-save"></i> حفظ المعلومة</button>
+                    <button type="button" id="cancelBtn" class="btn btn-secondary"><i class="fas fa-times"></i> إلغاء</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="knowledge-base" id="knowledgeBase">
+            <h2 class="section-title"><i class="fas fa-book"></i> قاعدة المعرفة</h2>
+            <div id="knowledgeItems">
+            </div>
+        </section>
+
+        <section class="all-knowledge" id="allKnowledge">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-book"></i> جميع المعلومات</h2>
+                <div class="filter-controls">
+                    <select id="filterSpecialty" style='background-color:rgb(9, 8, 47);font-weight: bold;font-size:17px' class="form-control">
+                        <option value="">جميع التخصصات</option>
+                        <option value="programming">البرمجة</option>
+                        <option value="medicine">الطب</option>
+                        <option value="engineering">الهندسة</option>
+                        <option value="science">العلوم</option>
+                        <option value="business">إدارة أعمال</option>
+                        <option value="arts">الفنون</option>
+                    </select>
+                    <button id="viewAllBtn" class="btn" style='background-color:rgb(9, 8, 47);font-weight: bold;font-size:17px'><i class="fas fa-eye"></i> عرض الكل</button>
+                </div>
+            </div>
+            <div id="allKnowledgeItems" class="knowledge-grid"></div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const specialtyCards = document.querySelectorAll('.specialty-card');
+            const specialtySelection = document.getElementById('specialtySelection');
+            const infoForm = document.getElementById('infoForm');
+            const knowledgeBase = document.getElementById('knowledgeBase');
+            const dynamicFields = document.getElementById('dynamicFields');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const knowledgeForm = document.getElementById('knowledgeForm');
+            const knowledgeItems = document.getElementById('knowledgeItems');
+            const allKnowledgeItems = document.getElementById('allKnowledgeItems');
+            const filterSpecialty = document.getElementById('filterSpecialty');
+            const viewAllBtn = document.getElementById('viewAllBtn');
+            
+            let currentSpecialty = '';
+            
+          
+            initApp();
+            
+        
+            specialtyCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    currentSpecialty = this.dataset.specialty;
+                    specialtySelection.style.display = 'none';
+                    infoForm.style.display = 'block';
+                    
+                  
+                    addSpecialtyFields(currentSpecialty);
+                });
+            });
+            
+         
+            cancelBtn.addEventListener('click', function() {
+                infoForm.style.display = 'none';
+                knowledgeBase.style.display = 'none';
+                specialtySelection.style.display = 'block';
+                knowledgeForm.reset();
+            });
+            
+            knowledgeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const infoTitle = document.getElementById('infoTitle').value;
+                const infoDescription = document.getElementById('infoDescription').value;
+                const additionalInfo = document.getElementById('additionalInfo').value;
+                const infoSource = document.getElementById('infoSource').value;
+                
+            
+                const specialtyData = {};
+                const specialtyInputs = dynamicFields.querySelectorAll('input, select, textarea');
+                specialtyInputs.forEach(input => {
+                    specialtyData[input.id] = input.value;
+                });
+                
+                saveKnowledgeItem(currentSpecialty, {
+                    title: infoTitle,
+                    description: infoDescription,
+                    additionalInfo: additionalInfo,
+                    source: infoSource,
+                    specialtyData: specialtyData,
+                    date: new Date().toLocaleDateString('ar-SA'),
+                    id: Date.now() 
+                });
+                
+                knowledgeForm.reset();
+                
+                infoForm.style.display = 'none';
+                knowledgeBase.style.display = 'block';
+                
+                displayKnowledgeItems(currentSpecialty);
+                
+                displayAllKnowledge();
+            });
+            
+            filterSpecialty.addEventListener('change', function() {
+                displayAllKnowledge(this.value);
+            });
+            
+            viewAllBtn.addEventListener('click', function() {
+                filterSpecialty.value = '';
+                displayAllKnowledge();
+            });
+            
+            function initApp() {
+                displayAllKnowledge();
+                
+                infoForm.style.display = 'none';
+                knowledgeBase.style.display = 'none';
+            }
+            
+            function addSpecialtyFields(specialty) {
+                dynamicFields.innerHTML = '';
+                
+                switch(specialty) {
+                    case 'programming':
+                        dynamicFields.innerHTML = `
+                            <div class="form-group">
+                                <label for="progLanguage"><i class="fas fa-code"></i> لغة البرمجة</label>
+                                <input type="text" id="progLanguage" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="progCategory"><i class="fas fa-tags"></i> التصنيف</label>
+                                <select id="progCategory" style='background-color:rgb(9, 8, 47);font-weight: bold;font-size:17px' class="form-control" required>
+                                    <option value="">اختر التصنيف...</option>
+                                    <option value="syntax">بناء الجملة</option>
+                                    <option value="algorithm">خوارزميات</option>
+                                    <option value="optimization">تحسين الأداء</option>
+                                    <option value="debugging">تصحيح الأخطاء</option>
+                                    <option value="best-practices">أفضل الممارسات</option>
+                                </select>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'medicine':
+                        dynamicFields.innerHTML = `
+                            <div class="form-group">
+                                <label for="medSpecialty"><i class="fas fa-stethoscope"></i> التخصص الطبي</label>
+                                <input type="text" id="medSpecialty" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="medType"><i class="fas fa-filter"></i> نوع المعلومة</label>
+                                <select id="medType" class="form-control" style='background-color:rgb(9, 8, 47);font-weight: bold;font-size:17px' required>
+                                    <option value="">اختر النوع...</option>
+                                    <option value="diagnosis">تشخيص</option>
+                                    <option value="treatment">علاج</option>
+                                    <option value="prevention">وقاية</option>
+                                    <option value="symptom">أعراض</option>
+                                    <option value="research">بحث علمي</option>
+                                </select>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'engineering':
+                        dynamicFields.innerHTML = `
+                            <div class="form-group">
+                                <label for="engField"><i class="fas fa-cog"></i> مجال الهندسة</label>
+                                <select id="engField" style='background-color:rgb(9, 8, 47);font-weight: bold;font-size:17px' class="form-control" required>
+                                    <option value="">اختر المجال...</option>
+                                    <option value="civil">هندسة مدنية</option>
+                                    <option value="mechanical">هندسة ميكانيكية</option>
+                                    <option value="electrical">هندسة كهربائية</option>
+                                    <option value="chemical">هندسة كيميائية</option>
+                                    <option value="software">هندسة برمجيات</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="engApplication"><i class="fas fa-wrench"></i> التطبيق العملي</label>
+                                <input type="text" id="engApplication" class="form-control" required>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'science':
+                        dynamicFields.innerHTML = `
+                            <div class="form-group">
+                                <label for="sciField"><i class="fas fa-flask"></i> مجال العلم</label>
+                                <select id="sciField" style='background-color:rgb(9, 8, 47);font-weight: bold;font-size:17px' class="form-control" required>
+                                    <option value="">اختر المجال...</option>
+                                    <option value="physics">الفيزياء</option>
+                                    <option value="chemistry">الكيمياء</option>
+                                    <option value="biology">الأحياء</option>
+                                    <option value="astronomy">الفلك</option>
+                                    <option value="geology">الجيولوجيا</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="sciTopic"><i class="fas fa-atom"></i> الموضوع</label>
+                                <input type="text" id="sciTopic" class="form-control" required>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'business':
+                        dynamicFields.innerHTML = `
+                            <div class="form-group">
+                                <label for="busField"><i class="fas fa-briefcase"></i> مجال الأعمال</label>
+                                <select id="busField" style='background-color:rgb(9, 8, 47);font-weight: bold;font-size:17px' class="form-control" required>
+                                    <option value="">اختر المجال...</option>
+                                    <option value="management">الإدارة</option>
+                                    <option value="marketing">التسويق</option>
+                                    <option value="finance">التمويل</option>
+                                    <option value="accounting">المحاسبة</option>
+                                    <option value="entrepreneurship">ريادة الأعمال</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="busApplication"><i class="fas fa-chart-pie"></i> التطبيق</label>
+                                <input type="text" id="busApplication" class="form-control" required>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 'arts':
+                        dynamicFields.innerHTML = `
+                            <div class="form-group">
+                                <label for="artField"><i class="fas fa-paint-brush"></i> مجال الفن</label>
+                                <select id="artField" style='background-color:rgb(9, 8, 47);font-weight: bold;font-size:17px' class="form-control" required>
+                                    <option value="">اختر المجال...</option>
+                                    <option value="painting">الرسم</option>
+                                    <option value="sculpture">النحت</option>
+                                    <option value="music">الموسيقى</option>
+                                    <option value="theater">المسرح</option>
+                                    <option value="dance">الرقص</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="artStyle"><i class="fas fa-palette"></i> النمط/الأسلوب</label>
+                                <input type="text" id="artStyle" class="form-control" required>
+                            </div>
+                        `;
+                        break;
+                        
+                    default:
+                        dynamicFields.innerHTML = `
+                            <div class="form-group">
+                                <label for="generalCategory"><i class="fas fa-tag"></i> التصنيف</label>
+                                <input type="text" id="generalCategory" class="form-control" required>
+                            </div>
+                        `;
+                }
+            }
+            
+            function saveKnowledgeItem(specialty, data) {
+                let knowledge = JSON.parse(localStorage.getItem('knowledge')) || {};
+                if (!knowledge[specialty]) {
+                    knowledge[specialty] = [];
+                }
+                knowledge[specialty].push(data);
+                localStorage.setItem('knowledge', JSON.stringify(knowledge));
+            }
+            
+          function deleteKnowledgeItem(specialty, id) {
+                let knowledge = JSON.parse(localStorage.getItem('knowledge')) || {};
+                if (knowledge[specialty]) {
+                    knowledge[specialty] = knowledge[specialty].filter(item => item.id !== id);
+                    localStorage.setItem('knowledge', JSON.stringify(knowledge));
+                    return true; 
+                }
+                return false; 
+            }
+            
+            function displayKnowledgeItems(specialty) {
+              const knowledge = JSON.parse(localStorage.getItem('knowledge')) || {};
+                const items = knowledge[specialty] || [];
+                
+                knowledgeItems.innerHTML = '';
+                
+                if (items.length === 0) {
+                    knowledgeItems.innerHTML = `
+                        <div class="info-card">
+                            <p>لا توجد معلومات مسجلة بعد في هذا التخصص.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                items.forEach((item) => {
+                    const card = document.createElement('div');
+                    card.className = 'info-card';
+                    
+                    let specialtyDetails = '';
+                    if (specialty === 'programming') {
+                        specialtyDetails = `
+                            <div class="meta-item">
+                                <i class="fas fa-code"></i>
+                                <span>لغة البرمجة: ${item.specialtyData.progLanguage}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-tag"></i>
+                                <span>التصنيف: ${item.specialtyData.progCategory}</span>
+                            </div>
+                        `;
+                    } else if (specialty === 'medicine') {
+                        specialtyDetails = `
+                            <div class="meta-item">
+                                <i class="fas fa-stethoscope"></i>
+                                <span>التخصص: ${item.specialtyData.medSpecialty}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-filter"></i>
+                                <span>النوع: ${item.specialtyData.medType}</span>
+                            </div>
+                        `;
+                    } else if (specialty === 'engineering') {
+                        specialtyDetails = `
+                            <div class="meta-item">
+                                <i class="fas fa-cog"></i>
+                                <span>المجال: ${item.specialtyData.engField}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-wrench"></i>
+                                <span>التطبيق: ${item.specialtyData.engApplication}</span>
+                            </div>
+                        `;
+                    } else if (specialty === 'science') {
+                        specialtyDetails = `
+                            <div class="meta-item">
+                                <i class="fas fa-flask"></i>
+                                <span>المجال: ${item.specialtyData.sciField}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-atom"></i>
+                                <span>الموضوع: ${item.specialtyData.sciTopic}</span>
+                            </div>
+                        `;
+                    } else if (specialty === 'business') {
+                        specialtyDetails = `
+                            <div class="meta-item">
+                                <i class="fas fa-briefcase"></i>
+                                <span>المجال: ${item.specialtyData.busField}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-chart-pie"></i>
+                                <span>التطبيق: ${item.specialtyData.busApplication}</span>
+                            </div>
+                        `;
+                    } else if (specialty === 'arts') {
+                        specialtyDetails = `
+                            <div class="meta-item">
+                                <i class="fas fa-paint-brush"></i>
+                                <span>المجال: ${item.specialtyData.artField}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-palette"></i>
+                                <span>النمط: ${item.specialtyData.artStyle}</span>
+                            </div>
+                        `;
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="card-actions">
+                            <button class="delete-btn" data-id="${item.id}" data-specialty="${specialty}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <h3><i class="fas fa-info-circle"></i> ${item.title}</h3>
+                        <div class="info-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>${item.date}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-layer-group"></i>
+                                <span>${getSpecialtyName(specialty)}</span>
+                            </div>
+                            ${specialtyDetails}
+                        </div>
+                        <div class="info-description">${item.description}</div>
+                        ${item.additionalInfo ? `
+                            <div class="additional-info">
+                                <h4><i class="fas fa-notes-medical"></i> معلومات إضافية</h4>
+                                <p>${item.additionalInfo}</p>
+                            </div>
+                        ` : ''}
+                        ${item.source ? `
+                            <div class="meta-item">
+                                <i class="fas fa-external-link-alt"></i>
+                                <a href="${item.source}" target="_blank" style="color: var(--accent-color);">المصدر</a>
+                            </div>
+                        ` : ''}
+                    `;
+                     card.innerHTML += `
+                        <div class="card-actions">
+                            <button class="delete-btn" data-id="${item.id}" data-specialty="${specialty}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    knowledgeItems.appendChild(card);
+                    
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        const specialty = this.dataset.specialty;
+                        if (deleteKnowledgeItem(specialty, id)) {
+                            displayKnowledgeItems(specialty);
+                            displayAllKnowledge(filterSpecialty.value);
+                            alert('تم حذف المعلومة بنجاح');
+                        }
+                    });
+                });
+            }
+            
+            function displayAllKnowledge(filterSpecialty = '') {
+                const allKnowledge = JSON.parse(localStorage.getItem('knowledge')) || {};
+                allKnowledgeItems.innerHTML = '';
+                
+                let hasItems = false;
+                
+                for (const [specialty, items] of Object.entries(allKnowledge)) {
+                    if (filterSpecialty && specialty !== filterSpecialty) continue;
+                    
+                    items.forEach(item => {
+                        hasItems = true;
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'knowledge-item';
+                        
+                        let specialtyDetails = '';
+                        if (item.specialtyData) {
+                            specialtyDetails = Object.entries(item.specialtyData)
+                                .map(([key, value]) => 
+                                    `<span><i class="fas fa-circle-small"></i> ${key}: ${value}</span>`
+                                ).join('');
+                        }
+                        
+                        itemElement.innerHTML = `
+                            <div class="card-actions">
+                                <button class="delete-btn" data-id="${item.id}" data-specialty="${specialty}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                            <h3><i class="fas fa-info-circle"></i> ${item.title}</h3>
+                            <div class="item-meta">
+                                <span><i class="fas fa-layer-group"></i> ${getSpecialtyName(specialty)}</span>
+                                ${specialtyDetails}
+                            </div>
+                            <div class="item-description">${item.description}</div>
+                            ${item.additionalInfo ? `
+                                <details class="additional-details">
+                                    <summary><i class="fas fa-chevron-down"></i> معلومات إضافية</summary>
+                                    <p>${item.additionalInfo}</p>
+                                </details>
+                            ` : ''}
+                            <div class="item-footer">
+                                <span><i class="fas fa-calendar-alt"></i> ${item.date}</span>
+                                ${item.source ? `
+                                    <a href="${item.source}" target="_blank" class="source-link">
+                                        <i class="fas fa-external-link-alt"></i> المصدر
+                                    </a>
+                                ` : ''}
+                            </div>
+                        `;
+                        itemElement.innerHTML += `
+                            <div class="card-actions">
+                                <button class="delete-btn" data-id="${item.id}" data-specialty="${specialty}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        allKnowledgeItems.appendChild(itemElement);
+                    });
+                }
+                
+                if (!hasItems) {
+                    allKnowledgeItems.innerHTML = `
+                        <div class="no-items-message">
+                            <i class="fas fa-info-circle"></i>
+                            <p>لا توجد معلومات مسجلة بعد.</p>
+                        </div>
+                    `;
+                }
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        const specialty = this.dataset.specialty;
+                        if (deleteKnowledgeItem(specialty, id)) {
+                            displayAllKnowledge(filterSpecialty);
+                            if (specialty === currentSpecialty) {
+                                displayKnowledgeItems(specialty);
+                            }
+                            alert('تم حذف المعلومة بنجاح');
+                        }
+                    });
+                });
+            }
+            
+            function getSpecialtyName(specialty) {
+                const names = {
+                    'programming': 'البرمجة',
+                    'medicine': 'الطب',
+                    'engineering': 'الهندسة',
+                    'science': 'العلوم',
+                    'business': 'إدارة أعمال',
+                    'arts': 'الفنون'
+                };
+                return names[specialty] || 'عام';
+            }
+        });
+    </script>
+</body>
+</html>

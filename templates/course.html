@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>منصة التعليم الحديثة</title>
+<!-- الخطوط وأطر التصميم الحديثة -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+<!-- أيقونات رائعة -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<style>
+  /* إعدادات عامة */
+  body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    background: #16213e;
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ترويسة جذابة */
+  header {
+    padding: 60px 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+
+  header h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 2;
+  }
+
+  header p {
+    font-size: 1.3em;
+    max-width: 700px;
+    margin: 0 auto 30px;
+  }
+
+  /* زر مبتكر وجذاب */
+  .cta-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #fff;
+    color: #2575fc;
+    font-weight: bold;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.3em;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn:hover {
+    background-color: rgb(226, 209, 209);
+    color: #6a11cb;
+    transform: translateY(-3px);
+  }
+
+
+  section.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 70px 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    position: relative;
+  }
+
+  .feature-box {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 40px 20px;
+    margin: 15px;
+    width: 300px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .feature-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4);
+  }
+
+  .feature-box h3 {
+    margin-top: 20px;
+    font-size: 1.8em;
+    position: relative;
+  }
+
+  /* أيقونة داخل المميزات */
+  .feature-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+    color: #fff;
+    opacity: 0.9;
+    transition: color 0.3s, transform 0.3s;
+  }
+
+  .feature-box:hover .feature-icon {
+    color: #e130f8;
+    transform: scale(1.2);
+  }
+
+  /* التذييل بألوان هادية */
+  footer {
+    padding: 30px 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 1em;
+    position: relative;
+  }
+
+  /* أنيميشن حركات */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animated-text {
+    display: inline-block;
+    animation: fadeInUp 1s ease-out both;
+  }
+
+  #particles-js {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- مؤثرات بكسل أو جزيئات جميلة -->
+<div id="particles-js"></div>
+
+<!-- رأس الصفحة -->
+<header>
+  <h1><span class="animated-text">منصة التعليم المطورة</span></h1>
+  <p>أطلق إمكانياتك وتعلم بكل سهولة ومرونة مع أحدث التقنيات الرقمية.</p>
+ <a href="/user/login" class="cta-btn">ابدأ الآن <i class="fas fa-arrow-circle-right"></i></a>
+</header>
+
+<!-- مميزات المنصة -->
+<section class="features">
+  <div class="feature-box">
+    <i class="fas fa-chalkboard-teacher feature-icon"></i>
+    <h3>دروس تفاعلية</h3>
+    <p>إبحر في عالم التعلم التفاعلي مع محتوى جذاب وفعال يبقيك محفزاً طوال الوقت.</p>
+  </div>
+  <div class="feature-box">
+    <i class="fas fa-cogs feature-icon"></i>
+    <h3>تقنيات حديثة</h3>
+    <p>نستخدم أحدث التطورات لضمان تجربة سلسة وسهلة مع تقنيات متطورة.</p>
+  </div>
+  <div class="feature-box">
+    <i class="fas fa-users-cog feature-icon"></i>
+    <h3>مدربون خبراء</h3>
+    <p>تعاون مع أفضل المدربين لضمان جودة المحتوى والتعلم الفعّال.</p>
+  </div>
+</section>
+
+<!-- تذييل الصفحة -->
+<footer>
+  &copy; 2025 منصة التعليم الحديثة. جميع الحقوق محفوظة.  
+  <div style="margin-top:10px;">
+    <a href="#" style="color:#fff; margin:0 10px;"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" style="color:#fff; margin:0 10px;"><i class="fab fa-twitter"></i></a>
+    <a href="#" style="color:#fff; margin:0 10px;"><i class="fab fa-instagram"></i></a>
+  </div>
+</footer>
+
+<!-- مكتبة الجزيئات -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+  particlesJS("particles-js", {
+    "particles": {
+      "number": { "value": 80, "density": { "enable": true, "value_area": 700 } },
+      "color": { "value": "#ffffff" },
+      "shape": { "type": "circle" },
+      "opacity": { "value": 0.5, "random": true },
+      "size": { "value": 3, "random": true },
+      "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": { "enable": true, "mode": "repulse" },
+        "onclick": { "enable": true, "mode": "push" }
+      },
+      "modes": {
+        "repulse": { "distance": 100, "duration": 0.4 },
+        "push": { "particles_nb": 4 }
+      }
+    },
+    "retina_detect": true
+  });
+</script>
+
+</body>
+</html>

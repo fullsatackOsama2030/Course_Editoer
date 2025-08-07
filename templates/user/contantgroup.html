@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل جماعي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+            --sent-bg: #1e1e1e;
+            --received-bg: #d32f2f;
+            --delete-btn: #ff4d4d;
+            --delete-hover: #e60000;
+            --send-btn: #25D366;
+            --send-hover: #1ebc5c;
+            --container-bg: rgba(58, 63, 71, 0.95);
+            --text-color: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: #2c3036;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            height: 90vh;
+            border-radius: 15px;
+            background-color: var(--container-bg);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            font-size: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .header-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .home-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            position: relative;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.sent {
+            background-color: var(--sent-bg);
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message.received {
+            background-color: var(--received-bg);
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #7289da;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        
+        .message-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message-text {
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+        
+        .message-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .message-username {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        
+        .delete-btn {
+            background-color: var(--delete-btn);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        
+        .delete-btn:hover {
+            background-color: var(--delete-hover);
+            transform: scale(1.05);
+        }
+        
+        .input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            background-color: rgba(46, 50, 56, 0.9);
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            resize: none;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+        
+        .message-input:focus {
+            outline: none;
+            border-color: #2575fc;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .send-btn {
+            padding: 0 20px;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--send-btn);
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .send-btn:hover {
+            background-color: var(--send-hover);
+            transform: scale(1.05);
+        }
+        
+        .timestamp {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+        
+        /* Custom scrollbar */
+        .messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        .messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            background-color: var(--received-bg);
+            border-radius: 15px;
+            margin-bottom: 10px;
+            width: fit-content;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .typing-indicator.visible {
+            opacity: 1;
+        }
+        
+        .typing-dots {
+            display: flex;
+            margin-right: 8px;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .container {
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .header {
+                border-radius: 0;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-text">
+                <i class="fas fa-comments"></i>
+                <span>تواصل جماعي</span>
+            </div>
+            <a class="home-link" href="/">
+                <i class="fas fa-home"></i>
+                <span style="margin-right: 5px;">الرئيسية</span>
+            </a>
+        </div>
+        
+        <div class="messages" id="messages">
+            <!-- Typing indicator (hidden by default) -->
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+                <span>يكتب الآن...</span>
+            </div>
+            
+            {% for message in messages %}
+                <div class="message {% if message.user_id == current_user.id %}sent{% else %}received{% endif %}">
+                    <div class="user-avatar">
+                        {% if message.user %}
+                            {{ message.user.username[0]|upper }}
+                        {% else %}
+                            U
+                        {% endif %}
+                    </div>
+                    <div class="message-content">
+                        {% if message.user_id != current_user.id %}
+                            <div class="message-username">
+                                {{ message.user.username if message.user else 'مستخدم' }}
+                            </div>
+                        {% endif %}
+                        <div class="message-text">
+                            {{ message.content }}
+                        </div>
+                        <div class="message-info">
+                            <span class="timestamp">
+                                {{ message.timestamp.strftime('%H:%M') if message.timestamp else 'الآن' }}
+                            </span>
+                            {% if message.user_id == current_user.id %}
+                                <form action="{{ url_for('delete_message', message_id=message.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="delete-btn">
+                                        <i class="fas fa-trash-alt"></i> حذف
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="input-area">
+            <form method="POST" style="width: 100%; display: flex;">
+                <textarea name="message" class="message-input" rows="1" placeholder="اكتب رسالتك هنا..." required></textarea>
+                <button type="submit" class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Auto-resize textarea
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Scroll to bottom initially
+        const messagesDiv = document.getElementById('messages');
+        function scrollToBottom() {
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        scrollToBottom();
+
+        // Simulate typing indicator (for demo purposes)
+        let isTyping = false;
+        textarea.addEventListener('focus', () => {
+            if (!isTyping) {
+                isTyping = true;
+                document.getElementById('typingIndicator').classList.add('visible');
+                scrollToBottom();
+            }
+        });
+        
+        textarea.addEventListener('blur', () => {
+            isTyping = false;
+            document.getElementById('typingIndicator').classList.remove('visible');
+        });
+
+        // Auto-scroll when new messages arrive
+        const observer = new MutationObserver(scrollToBottom);
+        observer.observe(messagesDiv, { childList: true });
+
+        // Real-time message updates
+        function fetchNewMessages() {
+            fetch('/get_new_messages')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        data.forEach(message => {
+                            // Check if message already exists
+                            if (!document.querySelector(`[data-message-id="${message.id}"]`)) {
+                                const messageDiv = document.createElement('div');
+                                messageDiv.className = `message ${message.user_id === current_user.id ? 'sent' : 'received'}`;
+                                messageDiv.dataset.messageId = message.id;
+                                messageDiv.innerHTML = `
+                                    <div class="user-avatar">
+                                        ${message.user ? message.user.username[0].toUpperCase() : 'U'}
+                                    </div>
+                                    <div class="message-content">
+                                        ${message.user_id !== current_user.id ? 
+                                            `<div class="message-username">
+                                                ${message.user ? message.user.username : 'مستخدم'}
+                                            </div>` : ''}
+                                        <div class="message-text">
+                                            ${message.content}
+                                        </div>
+                                        <div class="message-info">
+                                            <span class="timestamp">
+                                                ${new Date(message.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                            </span>
+                                            ${message.user_id === current_user.id ? `
+                                                <form action="/delete_message/${message.id}" method="POST" style="display:inline;">
+                                                    <button type="submit" class="delete-btn">
+                                                        <i class="fas fa-trash-alt"></i> حذف
+                                                    </button>
+                                                </form>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                `;
+                                messagesDiv.appendChild(messageDiv);
+                            }
+                        });
+                        scrollToBottom();
+                    }
+                })
+                .catch(error => console.error('Error fetching messages:', error));
+        }
+
+        // Poll for new messages every 2 seconds
+        setInterval(fetchNewMessages, 2000);
+
+        // Initial fetch
+        fetchNewMessages();
+    </script>
+</body>
+</html>
